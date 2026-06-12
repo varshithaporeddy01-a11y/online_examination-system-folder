@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Examination System</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f4f7fb;
+            --panel: #ffffff;
+            --panel-soft: #eef3f8;
+            --text: #1b2430;
+            --muted: #657385;
+            --line: #d9e2ec;
+            --primary: #146c94;
+            --primary-dark: #0d4f6f;
+            --accent: #2d8f67;
+            --danger: #b42318;
+            --warning: #ad6800;
+            --shadow: 0 16px 40px rgba(31, 45, 61, 0.10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        aside {
+            background: #17212f;
+            color: #f7fafc;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 20px;
+            letter-spacing: 0;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: var(--warning);
+        }
+
+        .status-dot.online {
+            background: #3fb950;
+        }
+
+        .status-dot.offline {
+            background: #f04438;
+        }
+
+        .sidebar-section {
+            display: grid;
+            gap: 8px;
+        }
+
+        .sidebar-section h2 {
+            margin: 8px 0 0;
+            font-size: 12px;
+            color: #9fb0c3;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .side-button {
+            width: 100%;
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #f7fafc;
+            background: transparent;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .side-button:hover,
+        .side-button.active {
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        main {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            min-width: 0;
+        }
+
+        header {
+            background: var(--panel);
+            border-bottom: 1px solid var(--line);
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .top-title h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .top-title p {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .session {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .pill {
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 7px 11px;
+            color: var(--muted);
+            background: var(--panel-soft);
+            font-size: 13px;
+        }
+
+        .content {
+            padding: 24px 28px 36px;
+            display: grid;
+            gap: 22px;
+            align-content: start;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 9px 12px;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            border-color: var(--primary);
+            background: #e8f4f8;
+            color: var(--primary-dark);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+
+        .panel {
+            grid-column: span 6;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 18px;
+            min-width: 0;
+        }
+
+        .panel.full {
+            grid-column: 1 / -1;
+        }
+
+        .panel.third {
+            grid-column: span 4;
+        }
+
+        .panel h3 {
+            margin: 0 0 14px;
+            font-size: 17px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        label {
+            display: grid;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 11px;
+            background: #fff;
+            color: var(--text);
+        }
+
+        textarea {
+            min-height: 112px;
+            resize: vertical;
+            line-height: 1.45;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 13px;
+            background: var(--primary);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn.secondary {
+            background: var(--panel-soft);
+            color: var(--text);
+            border: 1px solid var(--line);
+        }
+
+        .btn.danger {
+            background: var(--danger);
+        }
+
+        .notice {
+            min-height: 22px;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .notice.error {
+            color: var(--danger);
+        }
+
+        .notice.good {
+            color: var(--accent);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stat {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 25px;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .table-wrap {
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px;
+        }
+
+        th,
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        th {
+            background: var(--panel-soft);
+            color: #344054;
+            position: sticky;
+            top: 0;
+        }
+
+        .paper {
+            display: grid;
+            gap: 12px;
+        }
+
+        .question {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .question h4 {
+            margin: 0 0 10px;
+        }
+
+        .answers {
+            display: grid;
+            gap: 8px;
+        }
+
+        .answers button {
+            text-align: left;
+            border: 1px solid var(--line);
+            background: var(--panel-soft);
+            border-radius: 8px;
+            padding: 9px 10px;
+            cursor: pointer;
+        }
+
+        .answers button.selected {
+            border-color: var(--accent);
+            background: #e8f7ef;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 980px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            aside {
+                position: static;
+            }
+
+            .panel,
+            .panel.third {
+                grid-column: 1 / -1;
+            }
+
+            .stats,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .span-2 {
+                grid-column: span 1;
+            }
+
+            header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside>
+            <div class="brand">
+                <h1>OES</h1>
+                <span id="statusDot" class="status-dot"></span>
+            </div>
+
+            <div class="sidebar-section">
+                <h2>Workspace</h2>
+                <button class="side-button active" data-table="dashboard">Dashboard</button>
+                <button class="side-button" data-table="users">Users</button>
+                <button class="side-button" data-table="examination">Exams</button>
+                <button class="side-button" data-table="question_bank">Questions</button>
+                <button class="side-button" data-table="attempt">Attempts</button>
+                <button class="side-button" data-table="result">Results</button>
+            </div>
+
+            <div class="sidebar-section" id="tableButtons">
+                <h2>Tables</h2>
+            </div>
+        </aside>
+
+        <main>
+            <header>
+                <div class="top-title">
+                    <h2>Online Examination System</h2>
+                    <p id="apiStatus">Checking backend...</p>
+                </div>
+                <div class="session">
+                    <span class="pill" id="sessionPill">Not logged in</span>
+                    <button class="btn secondary" onclick="logout()">Logout</button>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="tabs">
+                    <button class="tab active" data-view="dashboard">Dashboard</button>
+                    <button class="tab" data-view="auth">Auth</button>
+                    <button class="tab" data-view="faculty">Faculty</button>
+                    <button class="tab" data-view="student">Student</button>
+                    <button class="tab" data-view="results">Results</button>
+                    <button class="tab" data-view="sql">SQL Console</button>
+                </div>
+
+                <section id="view-dashboard" class="view">
+                    <div class="stats" id="stats"></div>
+                    <div class="panel full">
+                        <h3>Data Preview</h3>
+                        <div class="actions">
+                            <button class="btn secondary" onclick="loadTable('users')">Users</button>
+                            <button class="btn secondary" onclick="loadTable('examination')">Exams</button>
+                            <button class="btn secondary" onclick="loadTable('question_bank')">Questions</button>
+                            <button class="btn secondary" onclick="loadTable('result')">Results</button>
+                        </div>
+                        <p class="notice" id="tableNotice"></p>
+                        <div class="table-wrap" id="tableOutput"></div>
+                    </div>
+                </section>
+
+                <section id="view-auth" class="view hidden">
+                    <div class="grid">
+                        <div class="panel">
+                            <h3>Register User</h3>
+                            <div class="form-grid">
+                                <label>Username<input id="regUsername" autocomplete="username"></label>
+                                <label>Password<input id="regPassword" type="password" autocomplete="new-password"></label>
+                                <label>Role
+                                    <select id="regRole">
+                                        <option value="student">Student</option>
+                                        <option value="faculty">Faculty</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn" onclick="registerUser()">Register</button>
+                            </div>
+                            <p class="notice" id="registerNotice"></p>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Login</h3>
+                            <div class="form-grid">
+                                <label>Username<input id="loginUsername" autocomplete="username"></label>
+                                <label>Password<input id="loginPassword" type="password" autocomplete="current-password"></label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn" onclick="loginUser()">Login</button>
+                                <button class="btn secondary" onclick="loadProfile()">Profile</button>
+                            </div>
+                            <p class="notice" id="loginNotice"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-faculty" class="view hidden">
+                    <div class="grid">
+                        <div class="panel">
+                            <h3>Create Question</h3>
+                            <div class="form-grid">
+                                <label>Faculty User ID<input id="questionFacultyId" type="number"></label>
+                                <label>Type<input id="questionType" value="MCQ" readonly></label>
+                                <label>Difficulty
+                                    <select id="difficulty">
+                                        <option value="EASY">Easy</option>
+                                        <option value="MEDIUM">Medium</option>
+                                        <option value="HARD">Hard</option>
+                                    </select>
+                                </label>
+                                <label>Correct Answer
+                                    <select id="correctAnswer">
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                </label>
+                                <label class="span-2">Question<textarea id="questionContent"></textarea></label>
+                                <label>Option A<input id="optionA"></label>
+                                <label>Option B<input id="optionB"></label>
+                                <label>Option C<input id="optionC"></label>
+                                <label>Option D<input id="optionD"></label>
+                                <label>Subject<input id="subjectTopic"></label>
+                                <label>Tags<input id="questionTags"></label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn" onclick="createQuestion()">Add Question</button>
+                                <button class="btn secondary" onclick="loadTable('question_bank')">View Questions</button>
+                            </div>
+                            <p class="notice" id="questionNotice"></p>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Create Exam</h3>
+                            <div class="form-grid">
+                                <label>Faculty User ID<input id="examFacultyId" type="number"></label>
+                                <label>Duration Minutes<input id="examDuration" type="number" value="30"></label>
+                                <label class="span-2">Title<input id="examTitle"></label>
+                                <label class="span-2">Scheduled Time<input id="examTime" placeholder="2026-05-17 10:00:00"></label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn" onclick="createExam()">Create Exam</button>
+                                <button class="btn secondary" onclick="loadTable('examination')">View Exams</button>
+                            </div>
+                            <p class="notice" id="examNotice"></p>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Assign Question</h3>
+                            <div class="form-grid">
+                                <label>Exam ID<input id="assignExamId" type="number"></label>
+                                <label>Question ID<input id="assignQuestionId" type="number"></label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn" onclick="assignQuestion()">Assign</button>
+                                <button class="btn secondary" onclick="loadExamQuestions()">Exam Questions</button>
+                            </div>
+                            <p class="notice" id="assignQuestionNotice"></p>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Assign Student</h3>
+                            <div class="form-grid">
+                                <label>Student User ID<input id="assignStudentId" type="number"></label>
+                                <label>Exam ID<input id="assignStudentExamId" type="number"></label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn" onclick="assignStudent()">Assign</button>
+                                <button class="btn secondary" onclick="loadTable('student_exam')">View Assignments</button>
+                            </div>
+                            <p class="notice" id="assignStudentNotice"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-student" class="view hidden">
+                    <div class="grid">
+                        <div class="panel">
+                            <h3>Student Exam Console</h3>
+                            <div class="form-grid">
+                                <label>Student User ID<input id="studentUserId" type="number"></label>
+                                <label>Exam ID<input id="studentExamId" type="number"></label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn secondary" onclick="loadStudentExams()">Assigned Exams</button>
+                                <button class="btn" onclick="startExam()">Start Exam</button>
+                                <button class="btn secondary" onclick="loadPaper()">Load Paper</button>
+                                <button class="btn danger" onclick="submitExam()">Submit Exam</button>
+                            </div>
+                            <p class="notice" id="studentNotice"></p>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Current Attempt</h3>
+                            <div class="form-grid">
+                                <label>Attempt ID<input id="attemptId"></label>
+                                <label>Started At<input id="attemptStart" readonly></label>
+                            </div>
+                            <p class="notice">Selected answers are saved immediately.</p>
+                        </div>
+
+                        <div class="panel full">
+                            <h3>Exam Paper</h3>
+                            <div id="paperOutput" class="paper"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-results" class="view hidden">
+                    <div class="grid">
+                        <div class="panel">
+                            <h3>Publish Result</h3>
+                            <div class="form-grid">
+                                <label>Result ID<input id="publishResultId" type="number"></label>
+                            </div>
+                            <div class="actions">
+                                <button class="btn" onclick="publishResult()">Publish</button>
+                                <button class="btn secondary" onclick="loadResults()">Refresh Results</button>
+                            </div>
+                            <p class="notice" id="resultNotice"></p>
+                        </div>
+                        <div class="panel full">
+                            <h3>Results</h3>
+                            <div class="table-wrap" id="resultOutput"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-sql" class="view hidden">
+                    <div class="panel full">
+                        <h3>SQL Console</h3>
+                        <textarea id="sqlInput">SELECT * FROM users LIMIT 20;</textarea>
+                        <div class="actions">
+                            <button class="btn" onclick="runSql()">Run Query</button>
+                            <button class="btn secondary" onclick="setSql('SHOW TABLES;')">Tables</button>
+                            <button class="btn secondary" onclick="setSql('SELECT * FROM examination LIMIT 20;')">Exams</button>
+                            <button class="btn secondary" onclick="setSql('SELECT * FROM result LIMIT 20;')">Results</button>
+                        </div>
+                        <p class="notice" id="sqlNotice"></p>
+                        <div class="table-wrap" id="sqlOutput"></div>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const API = window.location.protocol === "file:"
+            ? "http://localhost:5000"
+            : window.location.origin;
+        const state = {
+            user: JSON.parse(localStorage.getItem("oesUser") || "null"),
+            token: localStorage.getItem("oesToken") || "",
+            selectedAnswers: {}
+        };
+
+        const tables = [
+            "users",
+            "admin",
+            "student",
+            "faculty",
+            "question_bank",
+            "examination",
+            "exam_questions",
+            "student_exam",
+            "attempt",
+            "student_answers",
+            "result"
+        ];
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+        async function api(path, options = {}) {
+            const headers = {
+                "Content-Type": "application/json",
+                ...(options.headers || {})
+            };
+
+            if (state.token) {
+                headers.Authorization = `Bearer ${state.token}`;
+            }
+
+            const res = await fetch(`${API}${path}`, { ...options, headers });
+            const data = await res.json().catch(() => ({}));
+
+            if (!res.ok || data.success === false) {
+                throw new Error(data.error || data.message || `Request failed: ${res.status}`);
+            }
+
+            return data;
+        }
+
+        function setNotice(id, message, type = "") {
+            const el = $(id);
+            el.textContent = message || "";
+            el.className = `notice ${type}`;
+        }
+
+        function renderTable(targetId, rows) {
+            const target = $(targetId);
+
+            if (!Array.isArray(rows)) {
+                target.innerHTML = `<pre>${escapeHtml(JSON.stringify(rows, null, 2))}</pre>`;
+                return;
+            }
+
+            if (rows.length === 0) {
+                target.innerHTML = "<table><tbody><tr><td>No rows found</td></tr></tbody></table>";
+                return;
+            }
+
+            const cols = Object.keys(rows[0]);
+            const head = cols.map((col) => `<th>${escapeHtml(col)}</th>`).join("");
+            const body = rows.map((row) => {
+                return `<tr>${cols.map((col) => `<td>${escapeHtml(formatCell(row[col]))}</td>`).join("")}</tr>`;
+            }).join("");
+
+            target.innerHTML = `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+        }
+
+        function formatCell(value) {
+            if (value === null || value === undefined) return "";
+            if (typeof value === "object") return JSON.stringify(value);
+            return String(value);
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function switchView(view) {
+            document.querySelectorAll(".view").forEach((section) => section.classList.add("hidden"));
+            document.querySelectorAll(".tab").forEach((tab) => tab.classList.remove("active"));
+            $(`view-${view}`).classList.remove("hidden");
+            document.querySelector(`[data-view="${view}"]`).classList.add("active");
+
+            if (view === "dashboard") loadStats();
+            if (view === "results") loadResults();
+        }
+
+        async function checkHealth() {
+            try {
+                const data = await api("/api/health");
+                $("apiStatus").textContent = data.message;
+                $("statusDot").className = "status-dot online";
+            } catch (err) {
+                $("apiStatus").textContent = err.message;
+                $("statusDot").className = "status-dot offline";
+            }
+        }
+
+        function updateSession() {
+            if (state.user) {
+                $("sessionPill").textContent = `${state.user.username} / ${state.user.role} / ID ${state.user.user_id}`;
+                $("questionFacultyId").value = state.user.role === "faculty" ? state.user.user_id : $("questionFacultyId").value;
+                $("examFacultyId").value = state.user.role === "faculty" ? state.user.user_id : $("examFacultyId").value;
+                $("studentUserId").value = state.user.role === "student" ? state.user.user_id : $("studentUserId").value;
+            } else {
+                $("sessionPill").textContent = "Not logged in";
+            }
+        }
+
+        async function registerUser() {
+            try {
+                const data = await api("/api/auth/register", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        username: $("regUsername").value.trim(),
+                        password: $("regPassword").value,
+                        role: $("regRole").value
+                    })
+                });
+                setNotice("registerNotice", `${data.message}. User ID: ${data.user_id}`, "good");
+                loadStats();
+            } catch (err) {
+                setNotice("registerNotice", err.message, "error");
+            }
+        }
+
+        async function loginUser() {
+            try {
+                const data = await api("/api/auth/login", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        username: $("loginUsername").value.trim(),
+                        password: $("loginPassword").value
+                    })
+                });
+                state.token = data.token;
+                state.user = data.user;
+                localStorage.setItem("oesToken", state.token);
+                localStorage.setItem("oesUser", JSON.stringify(state.user));
+                updateSession();
+                setNotice("loginNotice", data.message, "good");
+            } catch (err) {
+                setNotice("loginNotice", err.message, "error");
+            }
+        }
+
+        async function loadProfile() {
+            try {
+                const data = await api("/api/auth/profile");
+                setNotice("loginNotice", JSON.stringify(data.user), "good");
+            } catch (err) {
+                setNotice("loginNotice", err.message, "error");
+            }
+        }
+
+        function logout() {
+            state.user = null;
+            state.token = "";
+            localStorage.removeItem("oesToken");
+            localStorage.removeItem("oesUser");
+            updateSession();
+        }
+
+        async function createQuestion() {
+            try {
+                const data = await api("/api/questions/add", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        faculty_user_id: $("questionFacultyId").value,
+                        content: $("questionContent").value.trim(),
+                        question_type: "MCQ",
+                        difficulty_level: $("difficulty").value,
+                        subject_topic: $("subjectTopic").value.trim(),
+                        tags: $("questionTags").value.trim(),
+                        correct_answer: $("correctAnswer").value.trim(),
+                        option_a: $("optionA").value.trim(),
+                        option_b: $("optionB").value.trim(),
+                        option_c: $("optionC").value.trim(),
+                        option_d: $("optionD").value.trim()
+                    })
+                });
+                setNotice("questionNotice", `${data.message}. Question ID: ${data.question_id}`, "good");
+                loadStats();
+            } catch (err) {
+                setNotice("questionNotice", err.message, "error");
+            }
+        }
+
+        async function createExam() {
+            try {
+                const data = await api("/api/exams/create", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        title: $("examTitle").value.trim(),
+                        duration_minutes: $("examDuration").value,
+                        scheduled_time: $("examTime").value.trim(),
+                        faculty_user_id: $("examFacultyId").value
+                    })
+                });
+                setNotice("examNotice", `${data.message}. Exam ID: ${data.exam_id}`, "good");
+                loadStats();
+            } catch (err) {
+                setNotice("examNotice", err.message, "error");
+            }
+        }
+
+        async function assignQuestion() {
+            try {
+                const data = await api("/api/exam-questions/assign", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        exam_id: $("assignExamId").value,
+                        question_id: $("assignQuestionId").value
+                    })
+                });
+                setNotice("assignQuestionNotice", data.message, "good");
+            } catch (err) {
+                setNotice("assignQuestionNotice", err.message, "error");
+            }
+        }
+
+        async function loadExamQuestions() {
+            try {
+                const examId = $("assignExamId").value;
+                const data = await api(`/api/exam-questions/${examId}`);
+                renderTable("tableOutput", data.questions);
+                switchView("dashboard");
+            } catch (err) {
+                setNotice("assignQuestionNotice", err.message, "error");
+            }
+        }
+
+        async function assignStudent() {
+            try {
+                const data = await api("/api/student-exams/assign", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        student_user_id: $("assignStudentId").value,
+                        exam_id: $("assignStudentExamId").value
+                    })
+                });
+                setNotice("assignStudentNotice", data.message, "good");
+            } catch (err) {
+                setNotice("assignStudentNotice", err.message, "error");
+            }
+        }
+
+        async function loadStudentExams() {
+            try {
+                const data = await api(`/api/student-exams/${$("studentUserId").value}`);
+                renderTable("tableOutput", data.exams);
+                switchView("dashboard");
+            } catch (err) {
+                setNotice("studentNotice", err.message, "error");
+            }
+        }
+
+        async function startExam() {
+            try {
+                const data = await api("/api/attempts/start", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        student_user_id: $("studentUserId").value,
+                        exam_id: $("studentExamId").value
+                    })
+                });
+                $("attemptId").value = data.attempt_id;
+                $("attemptStart").value = data.start_time || "";
+                setNotice("studentNotice", data.message, "good");
+            } catch (err) {
+                setNotice("studentNotice", err.message, "error");
+            }
+        }
+
+        async function loadPaper() {
+            try {
+                const examId = $("studentExamId").value;
+                const data = await api(`/api/exams/paper/${examId}`);
+                renderPaper(data.questions || []);
+                setNotice("studentNotice", `Loaded ${data.questions.length} questions`, "good");
+            } catch (err) {
+                setNotice("studentNotice", err.message, "error");
+            }
+        }
+
+        function renderPaper(questions) {
+            const output = $("paperOutput");
+            state.selectedAnswers = {};
+
+            if (!questions.length) {
+                output.innerHTML = "<p>No questions found.</p>";
+                return;
+            }
+
+            output.innerHTML = questions.map((q, index) => {
+                const options = ["A", "B", "C", "D"].map((key) => {
+                    const text = q.options ? q.options[key] : "";
+                    if (!text) return "";
+                    return `<button data-q="${q.question_id}" data-answer="${key}" onclick="saveAnswer(${q.question_id}, '${key}', this)">${key}. ${escapeHtml(text)}</button>`;
+                }).join("");
+
+                return `
+                    <article class="question">
+                        <h4>${index + 1}. ${escapeHtml(q.content)}</h4>
+                        <div class="answers">${options}</div>
+                    </article>
+                `;
+            }).join("");
+        }
+
+        async function saveAnswer(questionId, answer, button) {
+            try {
+                const attemptId = $("attemptId").value;
+                const data = await api("/api/student-answers/save", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        attempt_id: attemptId,
+                        question_id: questionId,
+                        selected_answer: answer
+                    })
+                });
+
+                document.querySelectorAll(`[data-q="${questionId}"]`).forEach((el) => el.classList.remove("selected"));
+                button.classList.add("selected");
+                state.selectedAnswers[questionId] = answer;
+                setNotice("studentNotice", data.message, "good");
+            } catch (err) {
+                setNotice("studentNotice", err.message, "error");
+            }
+        }
+
+        async function submitExam() {
+            try {
+                const data = await api("/api/attempts/submit", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        attempt_id: $("attemptId").value
+                    })
+                });
+                setNotice("studentNotice", `${data.message}. Score: ${data.score ?? "published"} / ${data.total_questions ?? ""}`, "good");
+                loadResults();
+            } catch (err) {
+                setNotice("studentNotice", err.message, "error");
+            }
+        }
+
+        async function loadResults() {
+            try {
+                const data = await api("/api/results/all");
+                renderTable("resultOutput", data.results);
+            } catch (err) {
+                $("resultOutput").innerHTML = "";
+                setNotice("resultNotice", err.message, "error");
+            }
+        }
+
+        async function publishResult() {
+            try {
+                const data = await api("/api/results/publish", {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        result_id: $("publishResultId").value
+                    })
+                });
+                setNotice("resultNotice", data.message, "good");
+                loadResults();
+            } catch (err) {
+                setNotice("resultNotice", err.message, "error");
+            }
+        }
+
+        async function loadTable(table) {
+            try {
+                const data = await api("/api/query", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        sql: `SELECT * FROM ${table} LIMIT 50;`
+                    })
+                });
+                renderTable("tableOutput", data.rows);
+                setNotice("tableNotice", `Showing ${table}`, "good");
+            } catch (err) {
+                setNotice("tableNotice", err.message, "error");
+            }
+        }
+
+        async function runSql() {
+            try {
+                const data = await api("/api/query", {
+                    method: "POST",
+                    body: JSON.stringify({ sql: $("sqlInput").value })
+                });
+                renderTable("sqlOutput", data.rows);
+                setNotice("sqlNotice", "Query completed", "good");
+            } catch (err) {
+                setNotice("sqlNotice", err.message, "error");
+            }
+        }
+
+        function setSql(sql) {
+            $("sqlInput").value = sql;
+        }
+
+        async function loadStats() {
+            const statDefs = [
+                ["users", "Users"],
+                ["examination", "Exams"],
+                ["question_bank", "Questions"],
+                ["result", "Results"]
+            ];
+
+            const cards = await Promise.all(statDefs.map(async ([table, label]) => {
+                try {
+                    const data = await api("/api/query", {
+                        method: "POST",
+                        body: JSON.stringify({ sql: `SELECT COUNT(*) AS count FROM ${table};` })
+                    });
+                    return `<div class="stat"><strong>${data.rows[0].count}</strong><span>${label}</span></div>`;
+                } catch (err) {
+                    return `<div class="stat"><strong>--</strong><span>${label}</span></div>`;
+                }
+            }));
+
+            $("stats").innerHTML = cards.join("");
+        }
+
+        function setupNavigation() {
+            document.querySelectorAll(".tab").forEach((button) => {
+                button.addEventListener("click", () => switchView(button.dataset.view));
+            });
+
+            document.querySelectorAll(".side-button").forEach((button) => {
+                button.addEventListener("click", () => {
+                    document.querySelectorAll(".side-button").forEach((el) => el.classList.remove("active"));
+                    button.classList.add("active");
+
+                    if (button.dataset.table === "dashboard") {
+                        switchView("dashboard");
+                    } else {
+                        loadTable(button.dataset.table);
+                        switchView("dashboard");
+                    }
+                });
+            });
+
+            $("tableButtons").innerHTML = "<h2>Tables</h2>" + tables.map((table) => {
+                return `<button class="side-button" onclick="loadTable('${table}'); switchView('dashboard');">${table}</button>`;
+            }).join("");
+        }
+
+        setupNavigation();
+        updateSession();
+        checkHealth();
+        loadStats();
+        loadTable("users");
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+%PDF-1.4
+%����
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 4490 >>
+stream
+0.04 0.16 0.30 rg /F2 25 Tf 58 735 Td (Online Examination System) Tj
+0.33 0.36 0.40 rg /F1 12 Tf 58 711 Td (Project Brief for Presentation) Tj
+0.18 0.20 0.23 rg /F1 10.5 Tf 58 683 Td (A concise overview of the project, features, workflow, technology stack, and purpose.) Tj
+0.18 0.34 0.55 rg /F2 14 Tf 58 659 Td (Project Overview) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 641 Td (The Online Examination System is a web-based application designed to manage exams digitally.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 627 Td (It provides a centralized platform where admins, faculty, and students can handle the full) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 613 Td (exam workflow from user registration to result publishing.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 595 Td (The system replaces manual exam handling with a faster and more organized online process.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 581 Td (Faculty can create exams and questions, students can attempt assigned exams, and results are) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 567 Td (evaluated automatically.) Tj
+0.18 0.34 0.55 rg /F2 14 Tf 58 541 Td (Main Objective) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 523 Td (The objective of this project is to simplify examination management by making exam creation,) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 509 Td (student assignment, answer submission, evaluation, and result management available through) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 495 Td (one digital system.) Tj
+0.18 0.34 0.55 rg /F2 14 Tf 58 469 Td (Key Features) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 451 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 451 Td (User authentication with registration and login.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 433 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 433 Td (Role-based users: admin, faculty, and student.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 415 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 415 Td (Faculty can create MCQ questions with options A-D and a correct answer.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 397 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 397 Td (Questions include difficulty level, subject/topic, and tags.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 379 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 379 Td (Faculty can create exams with title, duration, schedule, and faculty ID.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 361 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 361 Td (Questions can be assigned to exams.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 343 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 343 Td (Students can be assigned to specific exams.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 325 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 325 Td (Students can start an exam only if they are assigned.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 307 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 307 Td (Student answers are saved during the exam.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 289 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 289 Td (Automatic evaluation compares selected answers with correct answers.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 271 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 271 Td (Results are generated with total marks and can be published.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 253 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 253 Td (Dashboard interface for managing users, exams, questions, attempts, and results.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 235 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 235 Td (SQL console and health check API for database testing and monitoring.) Tj
+0.18 0.34 0.55 rg /F2 14 Tf 58 209 Td (How It Works) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 191 Td (1. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 191 Td (A user registers as admin, faculty, or student.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 173 Td (2. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 173 Td (Faculty adds MCQ questions to the question bank.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 155 Td (3. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 155 Td (Faculty creates an exam with duration and scheduled time.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 137 Td (4. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 137 Td (Questions are linked to the exam.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 119 Td (5. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 119 Td (Students are assigned to the exam.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 101 Td (6. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 101 Td (Student starts the exam and answers questions.) Tj
+0.45 0.45 0.45 rg /F1 9 Tf 58 34 Td (Online Examination System Project Brief) Tj
+0.45 0.45 0.45 rg /F1 9 Tf 524 34 Td (Page 1) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Length 2292 >>
+stream
+BT
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 735 Td (7. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 735 Td (The system saves answers and evaluates them automatically.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 717 Td (8. ) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 717 Td (A result is created and can be published.) Tj
+0.18 0.34 0.55 rg /F2 14 Tf 58 691 Td (Technology Stack) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 673 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 673 Td (Frontend: HTML, CSS, JavaScript.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 655 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 655 Td (Backend: Node.js with Express.js.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 637 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 637 Td (Database: MySQL.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 619 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 619 Td (Authentication: JWT tokens.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 601 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 601 Td (Password security: bcryptjs password hashing.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 583 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 583 Td (Configuration: dotenv environment variables.) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 66 565 Td (-) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 86 565 Td (Deployment support: Railway or Render with MySQL/Aiven.) Tj
+0.18 0.34 0.55 rg /F2 14 Tf 58 539 Td (Database Modules) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 521 Td (The database includes modules for users, admin, faculty, student, question bank,) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 507 Td (examination, exam questions, student exam assignments, attempts, student answers, and) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 493 Td (results.) Tj
+0.18 0.34 0.55 rg /F2 14 Tf 58 467 Td (Conclusion) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 449 Td (Overall, this project is a complete Online Examination System that handles exam creation,) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 435 Td (student assignment, answer submission, automatic checking, and result management. It is) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 421 Td (useful for schools, colleges, and training platforms that want to conduct exams online in a) Tj
+0.12 0.12 0.12 rg /F1 10.5 Tf 58 407 Td (structured and efficient way.) Tj
+0.45 0.45 0.45 rg /F1 9 Tf 58 34 Td (Online Examination System Project Brief) Tj
+0.45 0.45 0.45 rg /F1 9 Tf 524 34 Td (Page 2) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 7 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+6 0 obj
+<< /Type /Page /Parent 7 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 4 0 R >>
+endobj
+7 0 obj
+<< /Type /Pages /Kids [5 0 R 6 0 R] /Count 2 >>
+endobj
+8 0 obj
+<< /Type /Catalog /Pages 7 0 R >>
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000160 00000 n 
+0000004702 00000 n 
+0000007046 00000 n 
+0000007182 00000 n 
+0000007318 00000 n 
+0000007381 00000 n 
+trailer
+<< /Size 9 /Root 8 0 R >>
+startxref
+7430
+%%EOF
